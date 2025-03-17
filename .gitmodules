@@ -1,0 +1,3 @@
+[submodule "packages/pentatrion-design"]
+	path = packages/pentatrion-design
+	url = git@github.com:lhapaipai/pentatrion-design.git

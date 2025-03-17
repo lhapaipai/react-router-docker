@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
+@source "../node_modules/pentatrion-design/dist/lib";
+@source "../node_modules/pentatrion-design/dist/components";
+@source "../node_modules/pentatrion-design/dist/hooks";
+@source "../node_modules/pentatrion-design/dist/redux";
+
+@import "pentatrion-design/tailwind/index.css";
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
-}

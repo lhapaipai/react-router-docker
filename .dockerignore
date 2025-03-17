@@ -1,0 +1,12 @@
+node_modules
+
+packages/front/.react-router
+packages/front/build
+packages/front/node_modules
+
+packages/pentatrion-design/node_modules
+packages/pentatrion-design/dist
+packages/pentatrion-design/.storybook
+packages/pentatrion-design/.legacy
+
+README.md

@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { Button } from "pentatrion-design/button";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +9,10 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <div>
+      <h1>Welcome !</h1>
+      <Button>Click me !</Button>
+    </div>
+  );
 }
