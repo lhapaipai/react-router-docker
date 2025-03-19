@@ -1,0 +1,58 @@
+name: rr
+
+services:
+  front:
+    build: .
+    image: rg.fr-par.scw.cloud/pentatrion/rr-front:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "${DATABASE_URL:-postgresql://user:secret@db:5432/app?schema=public}"
+    depends_on:
+      db:
+        condition: service_healthy
+      db-migration:
+        condition: service_completed_successfully
+        restart: true
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --spider -q http://127.0.0.1:3000/healthcheck || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - "5441:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER:-user}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-secret}"
+      POSTGRES_DB: "${POSTGRES_DB:-app}"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-user} -d ${POSTGRES_DB:-secret}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db-migration:
+    build: .
+    command: ["pnpm", "prisma", "migrate", "deploy"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "${DATABASE_URL:-postgresql://user:secret@db:5432/app?schema=public}"
+
+volumes:
+  db_data:

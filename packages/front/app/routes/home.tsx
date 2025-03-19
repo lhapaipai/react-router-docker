@@ -1,3 +1,4 @@
+import { prisma } from "~/lib/prisma.server";
 import type { Route } from "./+types/home";
 import { Button } from "pentatrion-design/button";
 
@@ -8,10 +9,23 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
+export async function loader() {
+  const users = await prisma.user.findMany();
+  return { users };
+}
+
+export default function Home({ loaderData }: Route.ComponentProps) {
+  const { users } = loaderData;
   return (
     <div>
-      <h1>Welcome !</h1>
+      <h1>Welcome users !</h1>
+      <div>
+        {users.map(({ name, email }) => (
+          <div>
+            {name} ({email})
+          </div>
+        ))}
+      </div>
       <Button>Click me !</Button>
     </div>
   );

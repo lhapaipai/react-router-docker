@@ -1,10 +1,25 @@
 {
   "name": "app",
+  "type": "module",
   "scripts": {
     "build:design": "pnpm --filter pentatrion-design run build",
     "build:front": "pnpm --filter front run build",
     "build": "pnpm run build:design && pnpm run build:front",
     "start": "pnpm --filter front run start"
   },
-  "packageManager": "pnpm@10.6.3"
+  "packageManager": "pnpm@10.6.3",
+  "volta": {
+    "node": "22.14.0",
+    "pnpm": "10.6.4"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "sortablejs"
+      ],
+      "allowedVersions": {
+        "react": "19"
+      }
+    }
+  }
 }
