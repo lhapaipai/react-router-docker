@@ -1,0 +1,6 @@
+providers:
+  docker: {}
+  providersThrottleDuration: 2s
+
+api:
+  insecure: true

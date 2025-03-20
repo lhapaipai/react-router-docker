@@ -18,6 +18,7 @@ FROM base AS front
 WORKDIR /front
 COPY --from=builder /front ./
 USER node
+EXPOSE 3000
 CMD ["./node_modules/.bin/react-router-serve", "./build/server/index.js"]
 
 # bien penser à la propriété files du package.json de front

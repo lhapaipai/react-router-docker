@@ -1,12 +1,30 @@
 name: rr
 
 services:
+  reverse-proxy:
+    image: traefik:latest
+    command: --api.insecure=true
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/traefik/traefik.yml:/etc/traefik/traefik.yml
+
+  whoami:
+    # A container that exposes an API to show its IP address
+    image: traefik/whoami
+    labels:
+      - "traefik.http.routers.whoami-router.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.http.services.whoami-other.loadbalancer.server.port=80"
   front:
     build: .
-    image: rg.fr-par.scw.cloud/pentatrion/rr-front:latest
+    image: rg.fr-par.scw.cloud/pentatrion/react-router-docker:latest
+    labels:
+      - "traefik.http.routers.front.rule=Host(`front.react-router-docker.localhost`)"
     restart: unless-stopped
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     environment:
       DATABASE_URL: "${DATABASE_URL:-postgresql://user:secret@db:5432/app?schema=public}"
     depends_on:
@@ -27,8 +45,8 @@ services:
   db:
     image: postgres:latest
     restart: unless-stopped
-    ports:
-      - "5441:5432"
+    # ports:
+    #   - "5441:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
