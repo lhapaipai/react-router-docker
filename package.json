@@ -8,10 +8,6 @@
     "start": "pnpm --filter front run start"
   },
   "packageManager": "pnpm@10.6.3",
-  "volta": {
-    "node": "22.14.0",
-    "pnpm": "10.6.4"
-  },
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -21,5 +17,11 @@
         "react": "19"
       }
     }
+  },
+  "devDependencies": {
+    "prisma": "6.5.0"
+  },
+  "dependencies": {
+    "@prisma/client": "6.5.0"
   }
 }
