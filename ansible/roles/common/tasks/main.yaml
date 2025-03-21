@@ -1,0 +1,54 @@
+---
+- name: /etc/hostname
+  ansible.builtin.hostname:
+    name: "{{ server_hostname }}"
+
+- name: /usr/bin/hostname {{ server_hostname_result }}
+  ansible.builtin.shell:
+    cmd: hostname {{ server_hostname }}
+
+- name: Admin user | Crée l'utilisateur {{ admin_user }}
+  # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html
+  ansible.builtin.user:
+    name: "{{ admin_user }}"
+    shell: /bin/bash
+    append: true
+    groups: sudo
+    password: "{{ vault_admin_password }}"
+
+- name: Admin user | Ajoute les clés ssh à {{ admin_user }}
+  # https://docs.ansible.com/ansible/latest/collections/ansible/posix/authorized_key_module.html
+  ansible.posix.authorized_key:
+    user: "{{ admin_user }}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_lhapaipai.pub') }}"
+
+- name: Admin user | Sudoer without password
+  # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html
+  ansible.builtin.lineinfile:
+    dest: /etc/sudoers.d/90-cloud-init-users
+    create: true
+    state: present
+    regexp: "^{{ admin_user }}"
+    line: '{{ admin_user }} ALL=(ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
+
+
+- name: APT | Update
+  # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: dist
+
+# - name: tools
+#   ansible.builtin.apt:
+#     name:
+#       - git
+#       - debian-keyring
+#       - debian-archive-keyring
+#       - apt-transport-https
+#       - htop
+#       - unzip
+#     state: present
+
+

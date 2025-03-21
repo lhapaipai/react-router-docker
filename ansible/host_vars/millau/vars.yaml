@@ -1,0 +1,14 @@
+---
+hostname: millau
+
+ansible_user: root
+
+admin_user: lhapaipai
+admin_password: "{{ vault_admin_password }}"
+
+
+distrib_codename: jammy
+
+server_hostname: millau.pentatrion.com
+
+arch: amd64

@@ -1,0 +1,15 @@
+{
+  "ansible_facts": {},
+  "changed": false,
+  "failed_modules": {
+    "ansible.legacy.setup": {
+      "exception": "Traceback (most recent call last):\r\n  File \"/root/.ansible/tmp/ansible-tmp-1742235713.6962457-1213109-169481604889017/AnsiballZ_setup.py\", line 102, in <module>\r\n    _ansiballz_main()\r\n  File \"/root/.ansible/tmp/ansible-tmp-1742235713.6962457-1213109-169481604889017/AnsiballZ_setup.py\", line 94, in _ansiballz_main\r\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\r\n  File \"/root/.ansible/tmp/ansible-tmp-1742235713.6962457-1213109-169481604889017/AnsiballZ_setup.py\", line 37, in invoke_module\r\n    from ansible.module_utils import basic\r\n  File \"/tmp/ansible_ansible.legacy.setup_payload_41fsedio/ansible_ansible.legacy.setup_payload.zip/ansible/module_utils/basic.py\", line 176, in <module>\r\nModuleNotFoundError: No module named 'ansible.module_utils.six.moves'\r\n",
+      "failed": true,
+      "module_stderr": "Shared connection to millau.pentatrion.com closed.\r\n",
+      "module_stdout": "Traceback (most recent call last):\r\n  File \"/root/.ansible/tmp/ansible-tmp-1742235713.6962457-1213109-169481604889017/AnsiballZ_setup.py\", line 102, in <module>\r\n    _ansiballz_main()\r\n  File \"/root/.ansible/tmp/ansible-tmp-1742235713.6962457-1213109-169481604889017/AnsiballZ_setup.py\", line 94, in _ansiballz_main\r\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\r\n  File \"/root/.ansible/tmp/ansible-tmp-1742235713.6962457-1213109-169481604889017/AnsiballZ_setup.py\", line 37, in invoke_module\r\n    from ansible.module_utils import basic\r\n  File \"/tmp/ansible_ansible.legacy.setup_payload_41fsedio/ansible_ansible.legacy.setup_payload.zip/ansible/module_utils/basic.py\", line 176, in <module>\r\nModuleNotFoundError: No module named 'ansible.module_utils.six.moves'\r\n",
+      "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",
+      "rc": 1
+    }
+  },
+  "msg": "The following modules failed to execute: ansible.legacy.setup\n"
+}

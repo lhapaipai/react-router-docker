@@ -1,0 +1,27 @@
+[user]
+	name = Hugues Tavernier
+	email = hugues.tavernier@protonmail.com
+[core]
+	editor = nano
+
+	# les fins de lignes sont traitées différement en fonction
+	# de l'OS. garanti une unité.
+	autocrlf = input
+[alias]
+	ll = log -15 --oneline --all --graph
+	lll = log -30 --oneline --all --graph
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[push]
+	followTags = true

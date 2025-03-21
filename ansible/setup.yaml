@@ -1,0 +1,20 @@
+---
+- name: Installation du serveur
+  hosts: all
+  tags: common
+  roles: [common]
+
+- name: Firewall
+  hosts: all
+  tags: firewall
+  roles: [firewall]
+
+- name: Installation de l'environnement des utilisateurs
+  hosts: all
+  tags: user-env
+  roles: [user-env]
+
+- name: Installation de docker
+  hosts: all
+  tags: docker
+  roles: [docker]

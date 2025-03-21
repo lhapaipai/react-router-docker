@@ -1,0 +1,5 @@
+.vault_pass
+vault.yaml
+
+host_vars/berlin/id_berlin
+host_vars/berlin/id_berlin.pub

@@ -1,0 +1,41 @@
+# set show-all-if-ambiguous On
+
+
+# Ctrl+<Haut>
+"\e[1;5A": history-search-backward
+# Ctrl+<Bas>
+"\e[1;5B": history-search-forward
+
+# Ctrl+Alt+h
+"\e\C-h": history-expand-line
+
+# Ctrl+Alt+K
+"\e\C-k": kill-whole-line
+
+# Ctrl+K kill-line
+
+# Ctrl+<Retour-arrière>
+"\C-h": backward-kill-word
+
+# <Retour-arrière>
+"\C-?": backward-delete-char
+
+# Ajouter sudo au début de la ligne
+"\es": "\C-asudo \C-e"
+
+# Cherche un processus
+"\ep": '\C-a\C-kps axc | grep -i ""\C-b'
+
+# Ajouter un paquet
+"\e\C-p": '\C-a\C-ksudo pacman -S'
+
+
+
+# NON utilisé
+
+# Alt+K
+#"\ek": backward-kill-line
+
+# Alt+<Retour-arrière>
+#"\e\C-?": backward-kill-word
+

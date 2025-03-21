@@ -1,0 +1,42 @@
+---
+- name: add apt key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+
+- name: add apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ arch }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ distrib_codename }} stable"
+    update_cache: true
+
+- name: install
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+- name: add group docker to {{ admin_user }}
+  ansible.builtin.user:
+    name: "{{ admin_user }}"
+    append: true
+    groups: docker
+
+- name: install lazydocker
+  ansible.builtin.shell:
+    executable: /usr/bin/bash
+    cmd: |
+      GITHUB_LATEST_VERSION=$(curl -L -s -H 'Accept: application/json' https://github.com/jesseduffield/lazydocker/releases/latest | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
+      GITHUB_FILE="lazydocker_${GITHUB_LATEST_VERSION//v/}_Linux_x86_64.tar.gz"
+      GITHUB_URL="https://github.com/jesseduffield/lazydocker/releases/download/${GITHUB_LATEST_VERSION}/${GITHUB_FILE}"
+
+      curl -L -o lazydocker.tar.gz $GITHUB_URL
+      tar xzvf lazydocker.tar.gz lazydocker
+      install -Dm 755 lazydocker -t /usr/local/bin
+      rm lazydocker lazydocker.tar.gz
+  args:
+    creates: /usr/local/bin/lazydocker
