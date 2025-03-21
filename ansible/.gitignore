@@ -1,5 +1,5 @@
 .vault_pass
 vault.yaml
 
-host_vars/berlin/id_berlin
-host_vars/berlin/id_berlin.pub
+host_vars/millau/id_millau
+host_vars/millau/id_millau.pub

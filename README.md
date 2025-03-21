@@ -57,3 +57,25 @@ cd traefik/certs
 
 mkcert *.docker.localhost
 ```
+
+## self-hosted Github Action runner
+
+```bash
+# se connecter sur notre VPS en tant qu'utilisateur normal
+ssh millau
+
+mkdir actions-runner && cd actions-runner
+curl -o actions-runner-linux-x64-2.322.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.322.0/actions-runner-linux-x64-2.322.0.tar.gz
+echo "b13b784808359f31bc79b08a191f5f83757852957dd8fe3dbfcc38202ccf5768  actions-runner-linux-x64-2.322.0.tar.gz" | shasum -a 256 -c
+tar xzf ./actions-runner-linux-x64-2.322.0.tar.gz
+
+# configuration
+./config.sh --url https://github.com/lhapaipai/react-router-docker --token XXXX
+
+# installer le runner en tant que service
+sudo ./svc.sh install
+# le démarrer
+sudo ./svc.sh start
+
+# vérifier son état
+systemctl status actions.runner.lhapaipai-react-router-docker.millau.service

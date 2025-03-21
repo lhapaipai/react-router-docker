@@ -33,6 +33,21 @@
     line: '{{ admin_user }} ALL=(ALL) NOPASSWD:ALL'
     validate: 'visudo -cf %s'
 
+- name: "{{ admin_user }} | Copy SSH public key"
+  ansible.builtin.copy:
+    content: "{{ ssh_public_key }}"
+    dest: "/home/{{ admin_user }}/.ssh/id_rsa.pub"
+    mode: '0644'
+    owner: "{{ admin_user }}"
+    group: "{{ admin_user }}"
+
+- name: "{{ admin_user }} | Copy SSH private key"
+  ansible.builtin.copy:
+    content: "{{ ssh_private_key }}"
+    dest: "/home/{{ admin_user }}/.ssh/id_rsa"
+    mode: '0600'
+    owner: "{{ admin_user }}"
+    group: "{{ admin_user }}"
 
 - name: APT | Update
   # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html

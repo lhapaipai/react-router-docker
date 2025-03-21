@@ -58,7 +58,7 @@ services:
       - net-rr
 
   db-migration:
-    build: ./services/db-migration
+    build: ./docker/db-migration
     volumes:
       - ./packages/front/prisma:/app/prisma
     depends_on:

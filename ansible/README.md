@@ -20,9 +20,33 @@ cat .ssh/authorized_keys >> /root/.ssh/authorized_keys
 
 ```
 
+## Créer la paire de clé publique/privée pour le vps
+
+générer type RSA (problèmes avec ed_25519)
+```bash
+ssh-keygen -C "millau@pentatrion.com"
+```
+Inscrire le contenu des clés dans le fichier `vault.yaml`
+```yaml
+# ./host_vars/millau/vault.yaml
+vault_ssh_public_key: ssh-ed25519 XXX
+
+vault_ssh_private_key: |
+  -----BEGIN OPENSSH PRIVATE KEY-----
+  XXX
+  -----END OPENSSH PRIVATE KEY-----
+```
+
+
 ## Première installation
 
 Lancer le playbook
+
+```bash
+echo <SCW_SECRET_KEY> | docker login rg.fr-par.scw.cloud/<NAMESPACE> -u nologin --password-stdin
+```
+
+les credentials sont alors stockés dans : `/home/<admin_user>/.docker/config.json`.
 
 ```bash
 ansible-playbook setup.yaml
@@ -30,6 +54,8 @@ ansible-playbook setup.yaml
 # si l'on souhaite n'installer que certaines recettes
 ansible-playbook setup.yaml --tags common,user-env
 ```
+
+
 
 
 ## Configuration

@@ -12,6 +12,8 @@
 - name: install
   ansible.builtin.apt:
     name:
+      # for ansible : community.docker.docker_network
+      - python3-docker
       - docker-ce
       - docker-ce-cli
       - containerd.io

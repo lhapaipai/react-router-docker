@@ -1,0 +1,27 @@
+---
+- name: "create traefik directory"
+  ansible.builtin.file:
+    path: "{{ traefik_dir }}"
+    state: directory
+    owner: "{{ admin_user }}"
+    group: "{{ admin_user }}"
+
+- name: "copy compose.yaml"
+  ansible.builtin.copy:
+    src: compose.yaml
+    dest: "{{ traefik_dir }}/compose.yaml"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_user }}"
+
+- name: "copy traefik.yaml"
+  ansible.builtin.copy:
+    src: traefik.yml
+    dest: "{{ traefik_dir }}/traefik.yml"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_user }}"
+
+- name: Vérifier si le réseau Docker 'net-rr' existe
+  community.docker.docker_network:
+    name: net-rr
+    driver: bridge
+
