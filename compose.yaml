@@ -1,30 +1,27 @@
 name: rr
 
 services:
-  reverse-proxy:
-    image: traefik:latest
-    command: --api.insecure=true
-    ports:
-      - 80:80
-      - 8080:8080
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker/traefik/traefik.yml:/etc/traefik/traefik.yml
 
   whoami:
     # A container that exposes an API to show its IP address
     image: traefik/whoami
     labels:
-      - "traefik.http.routers.whoami-router.rule=Host(`whoami.docker.localhost`)"
-      - "traefik.http.services.whoami-other.loadbalancer.server.port=80"
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`deep.whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+    networks:
+      - net-rr
+
+
   front:
     build: .
     image: rg.fr-par.scw.cloud/pentatrion/react-router-docker:latest
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.front.rule=Host(`front.react-router-docker.localhost`)"
+      - "traefik.http.services.front.loadbalancer.server.port=3000"
     restart: unless-stopped
-    # ports:
-    #   - "3000:3000"
     environment:
       DATABASE_URL: "${DATABASE_URL:-postgresql://user:secret@db:5432/app?schema=public}"
     depends_on:
@@ -34,19 +31,16 @@ services:
         condition: service_completed_successfully
         restart: true
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "wget --spider -q http://127.0.0.1:3000/healthcheck || exit 1",
-        ]
+      test: "wget --spider -q http://127.0.0.1:3000/healthcheck || exit 1"
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      - net-rr
+
   db:
     image: postgres:latest
     restart: unless-stopped
-    # ports:
-    #   - "5441:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
@@ -54,14 +48,12 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-secret}"
       POSTGRES_DB: "${POSTGRES_DB:-app}"
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USER:-user} -d ${POSTGRES_DB:-secret}",
-        ]
+      test: "pg_isready -U ${POSTGRES_USER:-user} -d ${POSTGRES_DB:-app}"
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - net-rr
 
   db-migration:
     build: .
@@ -71,6 +63,12 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: "${DATABASE_URL:-postgresql://user:secret@db:5432/app?schema=public}"
+    networks:
+      - net-rr
 
 volumes:
   db_data:
+
+networks:
+  net-rr:
+    external: true

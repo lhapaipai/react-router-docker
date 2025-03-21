@@ -1,0 +1,13 @@
+services:
+  whoami:
+    labels:
+      - "traefik.http.routers.whoami-secure.rule=Host(`deep.whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami-secure.entrypoints=websecure"
+      - "traefik.http.routers.whoami-secure.tls=true"
+  front:
+    ports:
+      - 3000:3000
+  
+  db:
+    ports:
+      - 5441:5432

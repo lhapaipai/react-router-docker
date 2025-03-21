@@ -48,3 +48,12 @@ secret
 ```bash
 echo <SCW_SECRET_KEY> | docker login rg.fr-par.scw.cloud/<NAMESPACE> -u nologin --password-stdin
 ```
+
+# certificats pour le https en local
+
+```bash
+mkdir -p traefik/certs
+cd traefik/certs
+
+mkcert *.docker.localhost
+```

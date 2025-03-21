@@ -1,0 +1,6 @@
+tls:
+  certificates:
+    - certFile: /etc/certs/_wildcard.docker.localhost.pem
+      keyFile: /etc/certs/_wildcard.docker.localhost-key.pem
+    - certFile: /etc/certs/_wildcard.whoami.docker.localhost.pem
+      keyFile: /etc/certs/_wildcard.whoami.docker.localhost-key.pem
