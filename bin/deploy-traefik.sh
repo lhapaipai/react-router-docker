@@ -13,3 +13,6 @@ rsync -av \
   --exclude=letsentrypt \
   "$LOCAL_PATH/" \
   millau:$REMOTE_PATH
+
+ssh millau "cd $REMOTE_PATH && \
+  docker compose up -d --no-deps --force-recreate reverse-proxy"

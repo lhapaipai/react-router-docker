@@ -1,9 +1,6 @@
 ---
 hostname: millau
 
-ssh_public_key: "{{ vault_ssh_public_key }}"
-ssh_private_key: "{{ vault_ssh_private_key }}"
-
 ansible_user: root
 
 admin_user: lhapaipai

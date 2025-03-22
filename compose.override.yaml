@@ -27,3 +27,10 @@ services:
 
     ports:
       - 5441:5432
+
+secrets:
+  POSTGRES_PASSWORD:
+    file: ./secrets/POSTGRES_PASSWORD
+
+  DATABASE_URL:
+    file: ./secrets/DATABASE_URL
