@@ -2,37 +2,26 @@ name: rr
 
 services:
   whoami:
-    # A container that exposes an API to show its IP address
     image: traefik/whoami
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`deep.whoami.docker.localhost`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
     networks:
       - net-rr
 
   front:
-    build: .
-    image: rg.fr-par.scw.cloud/pentatrion/react-router-docker:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.front.rule=Host(`front.react-router-docker.localhost`)"
       - "traefik.http.services.front.loadbalancer.server.port=3000"
     restart: unless-stopped
-    environment:
-      DATABASE_URL: "${DATABASE_URL:-postgresql://user:secret@db:5432/app?schema=public}"
     depends_on:
       db:
         condition: service_healthy
-      db-migration:
-        condition: service_completed_successfully
-        restart: true
     healthcheck:
       test: "wget --spider -q http://127.0.0.1:3000/healthcheck || exit 1"
       start_period: 10s
       start_interval: 1s
-      interval: 30s
+      interval: 300s
       timeout: 2s
       retries: 3
     networks:
@@ -43,29 +32,14 @@ services:
     restart: unless-stopped
     volumes:
       - db_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: "${POSTGRES_USER:-user}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-secret}"
-      POSTGRES_DB: "${POSTGRES_DB:-app}"
     healthcheck:
-      test: "pg_isready -U ${POSTGRES_USER:-user} -d ${POSTGRES_DB:-app}"
+      test:
+        ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-} -d $${POSTGRES_DB:-}"]
       start_period: 10s
       start_interval: 1s
       interval: 30s
       timeout: 2s
       retries: 5
-    networks:
-      - net-rr
-
-  db-migration:
-    build: ./docker/db-migration
-    volumes:
-      - ./packages/front/prisma:/app/prisma
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: "${DATABASE_URL:-postgresql://user:secret@db:5432/app?schema=public}"
     networks:
       - net-rr
 

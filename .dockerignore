@@ -2,6 +2,7 @@
 
 packages/front/.react-router
 packages/front/build
+packages/front/docker
 
 packages/pentatrion-design/dist
 packages/pentatrion-design/.storybook

@@ -1,3 +1,7 @@
+local_path		:= $(PWD)
+remote_path		:= ~/app
+
+
 .PHONY: docker-dev docker-prod docker-prod-refresh-front
 
 docker-dev:
@@ -12,3 +16,9 @@ build-front:
 
 docker-prod-refresh-front:
 	docker compose up -d --no-deps --force-recreate front
+
+deploy-compose:
+	rsync -av \
+		--exclude-from .rsyncignore \
+		$(local_path)/compose*.yaml \
+		millau:$(remote_path)

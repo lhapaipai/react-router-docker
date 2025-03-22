@@ -7,9 +7,10 @@ RUN corepack enable && corepack install -g pnpm@10.6.3
 
 FROM base AS builder
 WORKDIR /workspace
-COPY ./.npmrc ./pnpm-lock.yaml ./
+
+COPY --from=workspace ./.npmrc ./pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch
-COPY . ./
+COPY --from=workspace . ./
 RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 RUN pnpm deploy --filter=front --prod /front
@@ -17,6 +18,7 @@ RUN pnpm deploy --filter=front --prod /front
 FROM base AS front
 WORKDIR /front
 COPY --from=builder /front ./
+COPY ./docker-entrypoint.sh /usr/local/bin/
 USER node
 EXPOSE 3000
 CMD ["./node_modules/.bin/react-router-serve", "./build/server/index.js"]

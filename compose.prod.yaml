@@ -1,0 +1,32 @@
+services:
+  whoami:
+    labels:
+      - "traefik.http.routers.whoami.rule=Host(`whoami.react-router-docker.pentatrion.com`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+
+      - "traefik.http.routers.whoami-secure.rule=Host(`whoami.react-router-docker.pentatrion.com`)"
+      - "traefik.http.routers.whoami-secure.entrypoints=websecure"
+      - "traefik.http.routers.whoami-secure.tls=true"
+      - "traefik.http.routers.whoami-secure.tls.certresolver=letsencrypt"
+
+  front:
+    image: rg.fr-par.scw.cloud/pentatrion/react-router-docker:latest
+    labels:
+      - "traefik.http.routers.front.rule=Host(`front.react-router-docker.pentatrion.com`)"
+    secrets:
+      - DATABASE_URL
+
+  db:
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD_FILE: /run/secrets/POSTGRES_PASSWORD
+    secrets:
+      - POSTGRES_PASSWORD
+
+secrets:
+  POSTGRES_PASSWORD:
+    file: ./secrets/POSTGRES_PASSWORD
+
+  DATABASE_URL:
+    file: ./secrets/DATABASE_URL

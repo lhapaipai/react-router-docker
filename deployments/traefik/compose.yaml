@@ -1,0 +1,26 @@
+services:
+  reverse-proxy:
+    image: traefik:v3.3
+    container_name: reverse-proxy
+    restart: unless-stopped
+
+    ports:
+      - 80:80
+      - 443:443
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./letsencrypt:/letsencrypt
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.millau.pentatrion.com`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+
+    networks:
+      - net-rr
+
+networks:
+  net-rr:
+    external: true

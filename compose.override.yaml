@@ -1,13 +1,29 @@
 services:
   whoami:
     labels:
-      - "traefik.http.routers.whoami-secure.rule=Host(`deep.whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+
+      - "traefik.http.routers.whoami-secure.rule=Host(`whoami.docker.localhost`)"
       - "traefik.http.routers.whoami-secure.entrypoints=websecure"
       - "traefik.http.routers.whoami-secure.tls=true"
   front:
+    build:
+      context: ./packages/front/docker
+      additional_contexts:
+        workspace: .
+    environment:
+      DATABASE_URL: postgresql://user:secret@db:5432/app?schema=public
     ports:
       - 3000:3000
-  
+    labels:
+      - "traefik.http.routers.front.rule=Host(`front.react-router-docker.localhost`)"
+
   db:
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: secret
+
     ports:
       - 5441:5432

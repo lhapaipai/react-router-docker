@@ -18,11 +18,5 @@
       }
     }
   },
-  "devDependencies": {
-    "prisma": "6.5.0"
-  },
-  "dependencies": {
-    "@prisma/client": "6.5.0"
-  },
   "version": "0.1.0"
 }

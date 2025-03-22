@@ -18,13 +18,3 @@
   hosts: all
   tags: docker
   roles: [docker]
-
-- name: Installation de Traefik
-  hosts: all
-  tags: traefik
-  roles: [traefik]
-
-- name: Installation de l'application
-  hosts: all
-  tags: app
-  roles: [app]

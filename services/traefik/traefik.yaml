@@ -2,11 +2,13 @@ global:
   sendAnonymousUsage: false
 
 api:
-  insecure: true
-
+  dashboard: true
+  
 providers:
   docker:
     exposedByDefault: false
+  file:
+    filename: /etc/traefik/dynamic.yaml
 
 entryPoints:
   web:

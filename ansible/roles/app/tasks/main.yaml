@@ -1,9 +1,0 @@
----
-
-- name: "clone repo"
-  become: true
-  become_user: "{{ admin_user }}"
-  ansible.builtin.git:
-    repo: git@github.com:lhapaipai/react-router-docker.git
-    dest: "{{ app_dir }}"
-    key_file: "/home/{{ admin_user }}/.ssh/id_rsa"
