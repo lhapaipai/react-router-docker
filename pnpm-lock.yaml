@@ -265,12 +265,6 @@ importers:
         specifier: ^3.24.2
         version: 3.24.2
 
-  services/db-migration:
-    dependencies:
-      prisma:
-        specifier: ^6.5.0
-        version: 6.5.0
-
 packages:
 
   '@adobe/css-tools@4.4.2':
@@ -8261,15 +8255,6 @@ snapshots:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
-
-  prisma@6.5.0:
-    dependencies:
-      '@prisma/config': 6.5.0
-      '@prisma/engines': 6.5.0
-    optionalDependencies:
-      fsevents: 2.3.3
-    transitivePeerDependencies:
-      - supports-color
 
   prisma@6.5.0(typescript@5.8.2):
     dependencies:

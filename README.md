@@ -3,6 +3,24 @@
 Modèle de base pour construire une image Docker d'une application React Router avec
 tout son écosystème.
 
+Objectif :
+- Semi automatiser le dispositif de déploiement. Déploiement en 3 commandes
+
+```bash
+pnpm version 0.2.1
+
+# les git push avec un tag de version lancent la 
+# génération d'une image docker de l'application
+git push origin
+
+# lorsque l'image est générée
+./bin/deploy.sh 0.2.1
+```
+
+- N'utiliser que des outils connus pour éviter les zones noires en cas de problème.
+- Réduire au maximum le temps de configuration du VPS : entre la mise à disposition du VPS
+par le fournisseur de service et le premier déploiement en prod (< 1heure)
+
 Fonctionnalités:
 
 - Application Node.js inclue dans un workspace PNPM 
@@ -15,7 +33,40 @@ Fonctionnalités:
 - GitHub Action pour construire et envoyer sur un gestionnaire de conteneur privé l'image de l'application
 - Labels Traefik dans le docker compose pour une configuration automatique du Reverse Proxy.
 
-## Pré-requis avant le premier déploiement
+```bash
+git clone git@github.com:lhapaipai/react-router-docker.git
+git submodule update --init
+
+pnpm install
+
+# pour construire le design system
+pnpm --filter pentatrion-design build
+```
+
+## Pour développer en local
+
+Si vous désirez un environnement de développement léger et flexible on utilisera
+Docker uniquement pour les services tiers (Base de donnée), l'environnement
+principal sera en local
+```bash
+docker compose up -d db
+
+cd packages/front
+
+# la première fois seulement
+# pour préparer la base de données
+pnpm prisma migrate reset
+
+pnpm run dev
+```
+
+si vous avez besoin d'éditer le design system, en plus des commandes ci-dessus
+
+```bash
+pnpm --filter pentatrion-design dev
+```
+
+## Pré-requis avant le premier déploiement sur le VPS
 
 Préparation des variables d'environnement
 
@@ -28,9 +79,17 @@ Préparation des variables d'environnement
 # copier la valeur générée dans ./ansible/host_vars/millau/vault.yaml
 # pour la clé vault_admin_password
 mkpasswd -m yescrypt
+```
+renseigner les secrets `./deployments/app/secrets`
+attention ne pas utiliser de caractère de fin de ligne à la fin du fichier
 
-# renseigner les secrets ./deployments/app/secrets
-# attention ne pas utiliser de caractère de fin de ligne à la fin du fichier
+choisir un mot de passe pour le vault de ansible `./ansible/.vault_pass`
+
+Pour protéger vos données sensibles vous pourrez désormais rechiffrer votre fichier `./ansible/host_vars/millau/vault.yaml`
+
+```bash
+ansible-vault encrypt ./ansible/host_vars/millau/vault.yaml
+ansible-vault decrypt ./ansible/host_vars/millau/vault.yaml
 ```
 
 ### Installation du VPS
@@ -80,16 +139,16 @@ Host millau
   User bob
 ```
 
-Pour protéger vos données sensibles vous pouvez rechiffrer votre fichier `vault.yaml`
-
-```bash
-ansible-vault encrypt host_vars/millau/vault.yaml
-ansible-vault decrypt host_vars/millau/vault.yaml
-```
-
 ### Installation de Traefik sur le VPS
 
 ```bash
+ssh millau
+# création d'un réseau de type bridge sur le VPS qui sera partagé entre le Traefik
+# et notre application
+docker create network net-rr
+exit
+
+# de retour en local on lance le déploiement
 ./bin/deploy-traefik.sh
 ```
 

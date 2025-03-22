@@ -20,8 +20,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     <div>
       <h1>Welcome users !</h1>
       <div>
-        {users.map(({ name, email }) => (
-          <div>
+        {users.map(({ id, name, email }) => (
+          <div key={id}>
             {name} ({email})
           </div>
         ))}

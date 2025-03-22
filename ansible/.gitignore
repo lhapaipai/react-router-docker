@@ -1,5 +1,4 @@
 .vault_pass
-vault.yaml
+hosts
 
-host_vars/millau/id_millau
-host_vars/millau/id_millau.pub
+host_vars/
