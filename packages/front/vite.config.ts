@@ -8,10 +8,6 @@ export default defineConfig({
   optimizeDeps: {
     include: [...dependenciesToPrebundle],
   },
-  build: {
-    commonjsOptions: {
-      // include: [/database/, /node_modules/],
-    },
-  },
+
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
 });

@@ -318,13 +318,6 @@ importers:
       prisma-json-types-generator:
         specifier: ^3.2.2
         version: 3.2.2(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
-    devDependencies:
-      '@types/node':
-        specifier: ^20
-        version: 20.17.25
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
 
   packages/tus-server:
     dependencies:
