@@ -8,6 +8,9 @@
       "path": "packages/front"
     },
     {
+      "path": "packages/api"
+    },
+    {
       "path": "packages/prisma-client"
     },
     {
