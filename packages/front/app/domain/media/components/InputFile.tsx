@@ -8,9 +8,9 @@ import "@uppy/image-editor/dist/style.min.css";
 
 import type { Meta, UppyFile } from "@uppy/core";
 import type { TusBody } from "@uppy/tus";
-import { type Media } from "@prisma/client";
+import type { Media } from "prisma-client";
 import { Button } from "pentatrion-design/button";
-import { calculateDimensions, parseTusResponse } from "~/domain/media/util";
+import { calculateDimensions } from "~/domain/media/util";
 import { createPortal } from "react-dom";
 import { isMediaImage, MediaPreview } from "pentatrion-design/media-preview";
 import { getMediaImageSrc, presets } from "../presets";

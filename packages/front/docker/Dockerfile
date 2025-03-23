@@ -15,6 +15,9 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 RUN pnpm deploy --filter=front --prod /front
 
+COPY --from=workspace ./packages/prisma-client/prisma /front/
+RUN cd /front && pnpm prisma generate
+
 FROM base AS front
 WORKDIR /front
 COPY --from=builder /front ./

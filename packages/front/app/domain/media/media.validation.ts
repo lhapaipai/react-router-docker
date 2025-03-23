@@ -1,5 +1,5 @@
-import { type Media } from "@prisma/client";
-import { z, ZodObject, type ZodRawShape } from "zod";
+import type { Media } from "prisma-client";
+import { z, type ZodObject, type ZodRawShape } from "zod";
 
 export const ResizeOptionsSchema = z.object({
   width: z.coerce.number().int().optional(),

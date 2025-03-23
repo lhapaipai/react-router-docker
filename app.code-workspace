@@ -8,6 +8,9 @@
       "path": "packages/front"
     },
     {
+      "path": "packages/prisma-client"
+    },
+    {
       "path": "packages/pentatrion-design"
     },
     {

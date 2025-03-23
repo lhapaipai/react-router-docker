@@ -3,6 +3,9 @@ import {FileStore} from'@tus/file-store';
 import crypto from 'node:crypto'
 import {S3Store} from "@tus/s3-store"
 import 'dotenv/config'
+import { PrismaClient } from 'prisma-client';
+
+const prisma = new PrismaClient();
 
 const host = '127.0.0.1'
 const port = 1080
@@ -37,6 +40,15 @@ const server = new Server({
     return res
   },
   async onUploadFinish(req, res, upload) {
+
+    const media = await prisma.media.create({
+      data: {
+        id: upload.id,
+        "mimeType": "image",
+        origin: "local",
+      }
+    })
+
     return {
       res,
       status_code: 200,
@@ -46,7 +58,8 @@ const server = new Server({
       body: JSON.stringify({
         id: upload.id,
         metadata: upload.metadata,
-        storage: upload.storage
+        storage: upload.storage,
+        media
       })
     }
   },

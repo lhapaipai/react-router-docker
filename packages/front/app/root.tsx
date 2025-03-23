@@ -15,7 +15,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { getPublicEnvs } from "./env";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader() {
   return data({
     publicEnv: getPublicEnvs(),
   });

@@ -1,7 +1,7 @@
-import { prisma } from "~/lib/prisma.server";
+import { prisma } from "./prisma";
 
 async function seed() {
-  const user = await prisma.user.create({
+  await prisma.user.create({
     data: {
       email: "hugues@pentatrion.com",
       name: "lhapaipai",

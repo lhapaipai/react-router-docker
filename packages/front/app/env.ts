@@ -1,9 +1,5 @@
 import { z } from "zod";
 
-const StringWithIntegerSchema = z
-  .string()
-  .refine((val) => /^-?\d+$/.test(val), { message: "Must be a string containing an integer" });
-
 const schema = z.object({
   NODE_ENV: z.enum(["production", "development", "test"]),
   DATABASE_URL: z.string(),

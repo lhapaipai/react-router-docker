@@ -1,0 +1,24 @@
+{
+  "name": "prisma-client",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "postinstall": "prisma generate"
+  },
+  "keywords": [],
+  "author": "Hugues Tavernier",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.3",
+  "dependencies": {
+    "@prisma/client": "6.5.0",
+    "prisma": "^6.5.0",
+    "prisma-json-types-generator": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "typescript": "^5.8.2"
+  }
+}

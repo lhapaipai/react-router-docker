@@ -1,6 +1,6 @@
 // import { ResizeOptions } from "./dto";
 
-import { type Media, Prisma } from "@prisma/client";
+import type { Media, Prisma } from "prisma-client";
 import { type MediaImage, MediaSchema } from "./media.validation";
 import { type TusResponseBody } from "~/types/tus";
 

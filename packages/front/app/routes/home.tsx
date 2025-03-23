@@ -1,8 +1,8 @@
-import { prisma } from "~/lib/prisma.server";
+import { prisma } from "~/lib/prisma";
 import type { Route } from "./+types/home";
 import { Button } from "pentatrion-design/button";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "New React Router App" },
     { name: "description", content: "Welcome to React Router!" },
@@ -16,6 +16,7 @@ export async function loader() {
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   const { users } = loaderData;
+
   return (
     <div>
       <div className="border-gray-2 m-2 border p-2">
@@ -26,8 +27,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         <h2>Test base de données</h2>
         <div>
           liste d'utilisateurs :
-          {users.map(({ id, name, email }) => (
-            <span key={id}>{name}</span>
+          {users.map(({ id, name, avatar }) => (
+            <span key={id}>
+              {name} {avatar && avatar.id}
+            </span>
           ))}
         </div>
       </div>

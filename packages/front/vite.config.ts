@@ -6,7 +6,12 @@ import { dependenciesToPrebundle } from "./vite.helpers";
 
 export default defineConfig({
   optimizeDeps: {
-    include: dependenciesToPrebundle,
+    include: [...dependenciesToPrebundle],
+  },
+  build: {
+    commonjsOptions: {
+      // include: [/database/, /node_modules/],
+    },
   },
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
 });
