@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "."
+    },
+    {
+      "path": "packages/front"
+    },
+    {
+      "path": "packages/pentatrion-design"
+    },
+    {
+      "path": "packages/tus-server"
+    },
+    {
+      "path": "services/traefik"
+    }
+  ],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "front"
+  }
+}

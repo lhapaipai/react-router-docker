@@ -1,0 +1,46 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run React Router DEV server",
+      "request": "launch",
+      "type": "node",
+      "runtimeExecutable": "react-router",
+      "runtimeArgs": ["dev"],
+      "env": {
+        "VSCODE_DEBUG": "1",
+        "NODE_ENV": "development",
+        "PRISMA_DEBUG_DB": "true"
+      }
+    },
+    {
+      "name": "Run React Router TEST server",
+      "request": "launch",
+      "type": "node",
+      "runtimeExecutable": "react-router",
+      "runtimeArgs": ["dev", "--mode=test", "--port=5180"],
+      "env": {
+        "VSCODE_DEBUG": "1",
+        "NODE_ENV": "development",
+        "PRISMA_DEBUG_DB": "true"
+      }
+    },
+    {
+      "name": "Run current ts file",
+      "request": "launch",
+      "type": "node",
+      "runtimeExecutable": "tsx",
+      "runtimeArgs": ["${relativeFile}"]
+    },
+    {
+      "name": "Test current ts file",
+      "request": "launch",
+      "type": "node",
+      "runtimeExecutable": "vitest",
+      "runtimeArgs": ["${relativeFile}"]
+    }
+  ]
+}

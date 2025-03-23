@@ -18,3 +18,21 @@ model User {
   email String  @unique
   name  String?
 }
+
+model Media {
+  id       String      @id
+  origin   MediaOrigin
+  mimeType String
+  width    Int?
+  height   Int?
+  size     Int?
+
+  // only for other origin when file is public and come from the web
+  src String?
+}
+
+enum MediaOrigin {
+  s3
+  local
+  other
+}

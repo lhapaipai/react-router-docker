@@ -7,3 +7,5 @@ compose.override.yaml
 
 deployments/app
 deployments/test
+
+services/traefik/dynamic.yaml

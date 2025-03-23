@@ -1,4 +1,5 @@
 import {
+  data,
   href,
   isRouteErrorResponse,
   Link,
@@ -7,12 +8,24 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { getPublicEnvs } from "./env";
+
+export async function loader({ request }: Route.LoaderArgs) {
+  return data({
+    publicEnv: getPublicEnvs(),
+  });
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useRouteLoaderData<typeof loader>("root");
+
+  const publicEnv = data?.publicEnv ?? {};
+
   return (
     <html lang="en">
       <head>
@@ -23,6 +36,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(publicEnv)}`,
+          }}
+        ></script>
+
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -35,6 +54,7 @@ export default function App() {
     <div>
       <nav className="bg-gray-1 flex gap-4 p-4">
         <Link to="/">Home</Link>
+        <Link to={href("/upload")}>Upload</Link>
         <Link to={href("/about")}>About</Link>
       </nav>
       <Outlet />

@@ -1,12 +1,8 @@
 services:
   whoami:
     labels:
+      - "traefik.http.routers.whoami.entrypoints=websecure"
       - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
-
-      - "traefik.http.routers.whoami-secure.rule=Host(`whoami.docker.localhost`)"
-      - "traefik.http.routers.whoami-secure.entrypoints=websecure"
-      - "traefik.http.routers.whoami-secure.tls=true"
   front:
     build:
       context: ./packages/front/docker
@@ -17,7 +13,8 @@ services:
     ports:
       - 3000:3000
     labels:
-      - "traefik.http.routers.front.rule=Host(`front.react-router-docker.localhost`)"
+      - "traefik.http.routers.front.entrypoints=websecure"
+      - "traefik.http.routers.front.rule=Host(`front.docker.localhost`)"
 
   db:
     environment:

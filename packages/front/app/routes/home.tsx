@@ -18,15 +18,25 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const { users } = loaderData;
   return (
     <div>
-      <h1>Welcome users !</h1>
-      <div>
-        {users.map(({ id, name, email }) => (
-          <div key={id}>
-            {name} ({email})
-          </div>
-        ))}
+      <div className="border-gray-2 m-2 border p-2">
+        <h1 className="text-h1">Test Tailwind Titre</h1>
       </div>
-      <Button>Click me !</Button>
+
+      <div className="border-gray-2 m-2 border p-2">
+        <h2>Test base de données</h2>
+        <div>
+          liste d'utilisateurs :
+          {users.map(({ id, name, email }) => (
+            <span key={id}>{name}</span>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-gray-2 m-2 border p-2">
+        <h2>Test design system</h2>
+
+        <Button>Click me !</Button>
+      </div>
     </div>
   );
 }

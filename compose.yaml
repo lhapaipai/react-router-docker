@@ -12,6 +12,7 @@ services:
   front:
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.front.middlewares=gzip@file"
       - "traefik.http.services.front.loadbalancer.server.port=3000"
     restart: unless-stopped
     depends_on:
@@ -42,6 +43,18 @@ services:
       retries: 5
     networks:
       - net-rr
+
+  tusd:
+    build:
+      context: services/tusd
+      dockerfile: Dockerfile.dev.local
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./packages/tusd/tusd-hooks:/srv/tusd-hooks
+      - ./packages/front/var/uploads:/srv/tusd-data/data
+      - ./packages/tusd/log:/srv/tusd-log
+    user: "1000:1000"
 
 volumes:
   db_data:

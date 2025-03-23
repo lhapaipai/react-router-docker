@@ -20,6 +20,11 @@
     "@prisma/client": "6.5.0",
     "@react-router/node": "^7.3.0",
     "@react-router/serve": "^7.3.0",
+    "@uppy/core": "^4.4.3",
+    "@uppy/dashboard": "^4.3.2",
+    "@uppy/image-editor": "^3.3.1",
+    "@uppy/react": "^4.2.2",
+    "@uppy/tus": "^4.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "isbot": "^5.1.17",
@@ -27,7 +32,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.3.0",
-    "tsx": "^4.19.3"
+    "tsx": "^4.19.3",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@react-router/dev": "^7.3.0",
