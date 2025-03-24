@@ -11,7 +11,7 @@
       "path": "packages/api"
     },
     {
-      "path": "packages/prisma-client"
+      "path": "packages/database"
     },
     {
       "path": "packages/pentatrion-design"

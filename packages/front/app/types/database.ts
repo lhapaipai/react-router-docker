@@ -1,4 +1,4 @@
-import type { Media } from "prisma-client";
+import type { Media } from "database";
 
 declare global {
   namespace PrismaJson {

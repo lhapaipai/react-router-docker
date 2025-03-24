@@ -3,6 +3,8 @@
 FROM node:22-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV COREPACK_DEFAULT_TO_LATEST=0
+
 RUN corepack enable && corepack prepare pnpm@latest-10 --activate
 
 FROM base AS builder
@@ -15,7 +17,7 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 RUN pnpm deploy --filter=front --prod /front
 
-COPY --from=workspace ./packages/prisma-client/prisma /front/
+COPY --from=workspace ./packages/database/prisma /front/
 RUN cd /front && pnpm prisma generate
 
 FROM base AS front

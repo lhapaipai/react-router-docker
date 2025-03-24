@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { User as UserModel } from 'prisma-client';
+import { User as UserModel } from 'database';
 import { PrismaService } from './prisma.service';
 
 @Controller()
@@ -17,6 +17,6 @@ export class AppController {
 
   @Get('users')
   async getAllUsers(): Promise<UserModel[]> {
-    return this.prismaService.user.findMany();
+    return await this.prismaService.user.findMany();
   }
 }

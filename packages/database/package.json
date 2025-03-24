@@ -1,15 +1,15 @@
 {
-  "name": "prisma-client",
+  "name": "database",
   "version": "1.0.0",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "client.js",
+  "types": "client.d.ts",
   "scripts": {
     "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "Hugues Tavernier",
   "license": "ISC",
-  "packageManager": "pnpm@10.6.3",
+  "packageManager": "pnpm@10.6.5",
   "dependencies": {
     "@prisma/client": "6.5.0",
     "prisma": "^6.5.0",

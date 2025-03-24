@@ -3,7 +3,7 @@ import {FileStore} from'@tus/file-store';
 import crypto from 'node:crypto'
 import {S3Store} from "@tus/s3-store"
 import 'dotenv/config'
-import { PrismaClient } from 'prisma-client';
+import { PrismaClient } from 'database';
 
 const prisma = new PrismaClient();
 

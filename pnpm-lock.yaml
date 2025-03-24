@@ -20,9 +20,9 @@ importers:
       '@nestjs/platform-express':
         specifier: ^11.0.1
         version: 11.0.12(@nestjs/common@11.0.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.12)
-      prisma-client:
+      database:
         specifier: workspace:^
-        version: link:../prisma-client
+        version: link:../database
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -106,6 +106,18 @@ importers:
         specifier: ^8.20.0
         version: 8.27.0(eslint@9.23.0(jiti@2.4.2))(typescript@5.8.2)
 
+  packages/database:
+    dependencies:
+      '@prisma/client':
+        specifier: 6.5.0
+        version: 6.5.0(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
+      prisma:
+        specifier: ^6.5.0
+        version: 6.5.0(typescript@5.8.2)
+      prisma-json-types-generator:
+        specifier: ^3.2.2
+        version: 3.2.2(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
+
   packages/front:
     dependencies:
       '@floating-ui/react':
@@ -141,15 +153,15 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      database:
+        specifier: workspace:*
+        version: link:../database
       isbot:
         specifier: ^5.1.17
         version: 5.1.25
       prisma:
         specifier: ^6.5.0
         version: 6.5.0(typescript@5.8.2)
-      prisma-client:
-        specifier: workspace:*
-        version: link:../prisma-client
       prisma-json-types-generator:
         specifier: ^3.2.2
         version: 3.2.2(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
@@ -404,18 +416,6 @@ importers:
         specifier: ^3.24.2
         version: 3.24.2
 
-  packages/prisma-client:
-    dependencies:
-      '@prisma/client':
-        specifier: 6.5.0
-        version: 6.5.0(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
-      prisma:
-        specifier: ^6.5.0
-        version: 6.5.0(typescript@5.8.2)
-      prisma-json-types-generator:
-        specifier: ^3.2.2
-        version: 3.2.2(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
-
   packages/tus-server:
     dependencies:
       '@tus/file-store':
@@ -427,12 +427,12 @@ importers:
       '@tus/server':
         specifier: ^1.10.2
         version: 1.10.2
+      database:
+        specifier: workspace:^
+        version: link:../database
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
-      prisma-client:
-        specifier: workspace:^
-        version: link:../prisma-client
     devDependencies:
       '@types/node':
         specifier: ^20

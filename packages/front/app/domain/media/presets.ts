@@ -1,4 +1,4 @@
-import type { Media } from "prisma-client";
+import type { Media } from "database";
 import { getPublicEnv } from "~/lib/util/env";
 import { type ResizeOptions } from "./media.validation";
 
